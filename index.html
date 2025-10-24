@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blame It On DNS - It's ALWAYS DNS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            animation: fadeIn 1s ease-in;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .main-btn {
+            display: inline-block;
+            margin: 30px 0;
+            padding: 20px 40px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+        }
+
+        .main-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        .main-btn:active {
+            transform: translateY(0);
+        }
+
+        .excuse-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .excuse-text {
+            font-size: 1.8em;
+            text-align: center;
+            line-height: 1.5;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffd93d;
+        }
+
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        .wisdom {
+            background: rgba(0,0,0,0.3);
+            border-left: 5px solid #ffd93d;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .blink {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        .troubleshooting {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .troubleshooting h2 {
+            color: #ffd93d;
+            margin-bottom: 20px;
+        }
+
+        .troubleshooting ol {
+            padding-left: 25px;
+        }
+
+        .troubleshooting li {
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        .ping {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes ping {
+            75%, 100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 BLAME IT ON DNS 🌐</h1>
+            <p class="tagline">"It's not DNS. There's no way it's DNS. It was DNS."</p>
+        </header>
+
+        <div style="text-align: center;">
+            <button class="main-btn" onclick="generateExcuse()">GENERATE EXCUSE</button>
+        </div>
+
+        <div class="excuse-box" id="excuseBox">
+            <p class="excuse-text">Click the button to blame DNS for your problems!</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number"><span class="ping"></span><span id="dnsBlames">0</span></div>
+                <div class="stat-label">Times DNS Has Been Blamed Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Chance It's Actually DNS</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">42ms</div>
+                <div class="stat-label">Time Wasted Not Checking DNS First</div>
+            </div>
+        </div>
+
+        <div class="wisdom">
+            <strong>Ancient IT Wisdom:</strong> "When in doubt, it's DNS. When not in doubt, check DNS anyway. When you've checked DNS and it's fine, check it again because it's definitely DNS."
+        </div>
+
+        <div class="troubleshooting">
+            <h2>The Official DNS Troubleshooting Guide</h2>
+            <ol>
+                <li>It's not DNS</li>
+                <li>It can't be DNS</li>
+                <li>Check the firewall</li>
+                <li>Check the application logs</li>
+                <li>Restart the server</li>
+                <li>Call the vendor</li>
+                <li>Question your career choices</li>
+                <li>Check DNS</li>
+                <li>It was DNS</li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 BlameItOnDNS.com | Proudly hosted on servers that definitely resolve correctly</p>
+            <p style="margin-top: 10px;">53/udp forever ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        const excuses = [
+            "Sorry I'm late, DNS was being slow... again.",
+            "The website is down? Must be DNS propagation. Give it 48 hours.",
+            "Can't connect to the database? Probably DNS.",
+            "Email not working? DNS. Always DNS.",
+            "The printer won't print? Have you checked DNS?",
+            "Slow internet? I bet it's DNS resolution times.",
+            "Can't ping localhost? Somehow... it's DNS.",
+            "Application timeout errors? DNS lookup is probably hanging.",
+            "Random 502 errors? DNS isn't resolving the backend.",
+            "Certificate errors? DNS is pointing to the wrong server.",
+            "Load balancer acting up? DNS round-robin strikes again.",
+            "VPN won't connect? DNS can't find the endpoint.",
+            "API returning 404? DNS is resolving to the old server.",
+            "Cache not clearing? DNS cache, obviously.",
+            "microservices can't talk to each other? Service discovery DNS is broken.",
+            "Coffee machine offline? IoT DNS module failed.",
+            "Can't SSH into production? DNS changed and nobody told you.",
+            "Deployment failed? DNS didn't update in time.",
+            "User says 'it works on my machine'? Their DNS is cached correctly, yours isn't.",
+            "Kubernetes pods crashing? CoreDNS is having a moment.",
+            "Docker containers can't resolve names? Docker DNS is being Docker DNS.",
+            "CDN serving stale content? DNS TTL is too long.",
+            "Third-party integration broken? Their DNS changed without notice.",
+            "Webhook not firing? DNS can't resolve the callback URL.",
+            "OAuth redirect failing? DNS pointing to localhost... in production.",
+            "Video won't stream? DNS can't find the media server.",
+            "Payment gateway timeout? DNS lookup took longer than the transaction.",
+            "Chat app won't load? WebSocket DNS resolution failed.",
+            "Maps not loading? Google's DNS is fine, yours isn't.",
+            "Alexa won't respond? Smart home DNS hub is confused."
+        ];
+
+        let blameCount = Math.floor(Math.random() * 9000) + 1000;
+        document.getElementById('dnsBlames').textContent = blameCount.toLocaleString();
+
+        function generateExcuse() {
+            const excuseBox = document.getElementById('excuseBox');
+            const excuseText = excuseBox.querySelector('.excuse-text');
+            
+            const randomExcuse = excuses[Math.floor(Math.random() * excuses.length)];
+            excuseText.textContent = randomExcuse;
+            
+            excuseBox.classList.add('blink');
+            setTimeout(() => excuseBox.classList.remove('blink'), 500);
+            
+            blameCount++;
+            document.getElementById('dnsBlames').textContent = blameCount.toLocaleString();
+        }
+
+        // Auto-increment the blame counter occasionally
+        setInterval(() => {
+            blameCount += Math.floor(Math.random() * 3);
+            document.getElementById('dnsBlames').textContent = blameCount.toLocaleString();
+        }, 5000);
+    </script>
+</body>
+</html>
