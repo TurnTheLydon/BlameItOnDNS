@@ -25,6 +25,48 @@
             margin: 0 auto;
         }
 
+        nav {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            animation: fadeIn 1s ease-in;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
         header {
             text-align: center;
             padding: 40px 0;
@@ -125,6 +167,36 @@
             font-style: italic;
         }
 
+        nav {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
         .footer {
             text-align: center;
             margin-top: 60px;
@@ -188,11 +260,11 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🌐 BLAME IT ON DNS 🌐</h1>
+        <div style="text-align: center; padding: 40px 0; animation: fadeIn 1s ease-in;">
+            <h1 style="font-size: 3em; margin-bottom: 10px; text-shadow: 3px 3px 6px rgba(0,0,0,0.3);">🌐 BLAME IT ON DNS 🌐</h1>
             <p class="tagline">"It's not DNS. There's no way it's DNS. It was DNS."</p>
             <p class="tagline" style="margin-top: 10px; font-weight: bold; color: #ffd93d;">Real men don't use secure DNS</p>
-        </header>
+        </div>
 
         <div style="text-align: center;">
             <button class="main-btn" onclick="generateExcuse()">GENERATE EXCUSE</button>
@@ -218,7 +290,11 @@
         </div>
 
         <div class="wisdom">
-            <strong>Ancient IT Wisdom:</strong> "When in doubt, it's DNS. When not in doubt, check DNS anyway. When you've checked DNS and it's fine, check it again because it's definitely DNS."
+            <strong>Ancient IT Wisdom:</strong> <span id="wisdomText">When in doubt, it's DNS. When not in doubt, check DNS anyway. When you've checked DNS and it's fine, check it again because it's definitely DNS.</span>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="main-btn" onclick="generateWisdom()" style="font-size: 1em; padding: 12px 30px;">GET MORE WISDOM</button>
         </div>
 
         <div class="troubleshooting">
@@ -276,6 +352,24 @@
             "Alexa won't respond? Smart home DNS hub is confused."
         ];
 
+        const wisdom = [
+            "When in doubt, it's DNS. When not in doubt, check DNS anyway. When you've checked DNS and it's fine, check it again because it's definitely DNS.",
+            "The three hardest problems in computer science: cache invalidation, naming things, and DNS.",
+            "A wise sysadmin once said: 'I've seen things you wouldn't believe. Attack ships on fire off the shoulder of Orion. C-beams glittering in the dark near the Tannhäuser Gate. But nothing, NOTHING, compares to a misconfigured DNS zone file.'",
+            "Trust in the Lord with all your heart, and lean not on your own understanding. But always, ALWAYS check DNS first.",
+            "99 problems and DNS is at least 86 of them.",
+            "If debugging is the process of removing bugs, then programming is the process of putting them in. But DNS? DNS is the art of creating problems that shouldn't exist in a system that always worked yesterday.",
+            "To err is human. To blame it on DNS is DevOps.",
+            "In the beginning, there was the command line. Then came the GUI. Then came DNS. And lo, there were problems.",
+            "DNS: Because someone thought 'what if we made the internet depend on a distributed system that caches aggressively and propagates slowly?'",
+            "The five stages of debugging: Denial (it's not DNS), Anger (why is it always DNS?), Bargaining (maybe if I flush the cache...), Depression (it's DNS again), Acceptance (it was DNS all along).",
+            "A DNS query walks into a bar. The bartender says 'Sorry, we don't serve your type here.' The query times out.",
+            "DNS is like that friend who always shows up late and gives you outdated information, but you can't live without them.",
+            "Real programmers don't comment their code. If it was hard to write, it should be hard to understand. But everyone documents their DNS changes... after the outage.",
+            "There are only two types of DNS configurations: ones that are broken, and ones that are about to break.",
+            "They say to learn from your mistakes. I've been using DNS for 20 years and I'm still learning."
+        ];
+
         let blameCount = Math.floor(Math.random() * 9000) + 1000;
         document.getElementById('dnsBlames').textContent = blameCount.toLocaleString();
 
@@ -291,6 +385,17 @@
             
             blameCount++;
             document.getElementById('dnsBlames').textContent = blameCount.toLocaleString();
+        }
+
+        function generateWisdom() {
+            const wisdomText = document.getElementById('wisdomText');
+            const wisdomBox = wisdomText.parentElement;
+            
+            const randomWisdom = wisdom[Math.floor(Math.random() * wisdom.length)];
+            wisdomText.textContent = randomWisdom;
+            
+            wisdomBox.classList.add('blink');
+            setTimeout(() => wisdomBox.classList.remove('blink'), 500);
         }
 
         // Auto-increment the blame counter occasionally
